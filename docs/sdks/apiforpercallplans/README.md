@@ -30,14 +30,14 @@ For better accuracy, we strongly advise to provide extra information such as the
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.api_for_per_call_plans.get_tracking()
+    res = s_client.api_for_per_call_plans.get_tracking()
 
     # Handle response
     print(res)

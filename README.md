@@ -98,7 +98,7 @@ poetry add git+<UNSET>.git
 You can use this SDK in a Python shell with [uv](https://docs.astral.sh/uv/) and the `uvx` command that comes with it like so:
 
 ```shell
-uvx --from ship-24 python
+uvx --from ship24 python
 ```
 
 It's also possible to write a standalone Python script without needing to set up a whole project like so:
@@ -108,11 +108,11 @@ It's also possible to write a standalone Python script without needing to set up
 # /// script
 # requires-python = ">=3.9"
 # dependencies = [
-#     "ship-24",
+#     "ship24",
 # ]
 # ///
 
-from ship_24 import Ship24
+from ship24 import Ship24
 
 sdk = Ship24(
   # SDK arguments
@@ -143,14 +143,14 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 ```python
 # Synchronous Example
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.create_tracker()
+    res = s_client.trackers.create_tracker()
 
     # Handle response
     print(res)
@@ -163,15 +163,15 @@ The same SDK client can also be used to make asychronous requests by importing a
 # Asynchronous Example
 import asyncio
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 async def main():
 
     async with Ship24(
         authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-    ) as ship24:
+    ) as s_client:
 
-        res = await ship24.trackers.create_tracker_async()
+        res = await s_client.trackers.create_tracker_async()
 
         # Handle response
         print(res)
@@ -194,14 +194,14 @@ This SDK supports the following security scheme globally:
 To authenticate with the API the `authorization` parameter must be set when initializing the SDK client instance. For example:
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.create_tracker()
+    res = s_client.trackers.create_tracker()
 
     # Handle response
     print(res)
@@ -247,15 +247,15 @@ Some of the endpoints in this SDK support retries. If you use the SDK without an
 To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
 ```python
 import os
-from ship_24 import Ship24
-from ship_24.utils import BackoffStrategy, RetryConfig
+from ship24 import Ship24
+from ship24.utils import BackoffStrategy, RetryConfig
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.create_tracker(,
+    res = s_client.trackers.create_tracker(,
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
     # Handle response
@@ -266,16 +266,16 @@ with Ship24(
 If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
 ```python
 import os
-from ship_24 import Ship24
-from ship_24.utils import BackoffStrategy, RetryConfig
+from ship24 import Ship24
+from ship24.utils import BackoffStrategy, RetryConfig
 
 
 with Ship24(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.create_tracker()
+    res = s_client.trackers.create_tracker()
 
     # Handle response
     print(res)
@@ -286,7 +286,7 @@ with Ship24(
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-[`Ship24Error`](./src/ship_24/errors/ship24error.py) is the base class for all HTTP error responses. It has the following properties:
+[`Ship24Error`](./src/ship24/errors/ship24error.py) is the base class for all HTTP error responses. It has the following properties:
 
 | Property           | Type             | Description                                                                             |
 | ------------------ | ---------------- | --------------------------------------------------------------------------------------- |
@@ -300,16 +300,16 @@ with Ship24(
 ### Example
 ```python
 import os
-from ship_24 import Ship24, errors
+from ship24 import Ship24, errors
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
     res = None
     try:
 
-        res = ship24.trackers.create_tracker()
+        res = s_client.trackers.create_tracker()
 
         # Handle response
         print(res)
@@ -331,8 +331,8 @@ with Ship24(
 
 ### Error Classes
 **Primary errors:**
-* [`Ship24Error`](./src/ship_24/errors/ship24error.py): The base class for HTTP error responses.
-  * [`ErrorResponseFormat`](./src/ship_24/errors/errorresponseformat.py): Generic error.
+* [`Ship24Error`](./src/ship24/errors/ship24error.py): The base class for HTTP error responses.
+  * [`ErrorResponseFormat`](./src/ship24/errors/errorresponseformat.py): Generic error.
 
 <details><summary>Less common errors (6)</summary>
 
@@ -344,9 +344,9 @@ with Ship24(
     * [`httpx.TimeoutException`](https://www.python-httpx.org/exceptions/#httpx.TimeoutException): HTTP request timed out.
 
 
-**Inherit from [`Ship24Error`](./src/ship_24/errors/ship24error.py)**:
-* [`BulkCreateTrackersResponseError`](./src/ship_24/errors/bulkcreatetrackersresponseerror.py): Created. Applicable to 1 of 11 methods.*
-* [`ResponseValidationError`](./src/ship_24/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
+**Inherit from [`Ship24Error`](./src/ship24/errors/ship24error.py)**:
+* [`BulkCreateTrackersResponseError`](./src/ship24/errors/bulkcreatetrackersresponseerror.py): Created. Applicable to 1 of 11 methods.*
+* [`ResponseValidationError`](./src/ship24/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
 
@@ -361,15 +361,15 @@ with Ship24(
 The default server can be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     server_url="https://api.ship24.com",
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.create_tracker()
+    res = s_client.trackers.create_tracker()
 
     # Handle response
     print(res)
@@ -386,7 +386,7 @@ This allows you to wrap the client with your own custom logic, such as adding cu
 
 For example, you could specify a header for every request that this sdk makes as follows:
 ```python
-from ship_24 import Ship24
+from ship24 import Ship24
 import httpx
 
 http_client = httpx.Client(headers={"x-custom-header": "someValue"})
@@ -395,8 +395,8 @@ s = Ship24(client=http_client)
 
 or you could wrap the client with your own custom logic:
 ```python
-from ship_24 import Ship24
-from ship_24.httpclient import AsyncHttpClient
+from ship24 import Ship24
+from ship24.httpclient import AsyncHttpClient
 import httpx
 
 class CustomClient(AsyncHttpClient):
@@ -467,12 +467,12 @@ The `Ship24` class implements the context manager protocol and registers a final
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 def main():
 
     with Ship24(
         authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-    ) as ship24:
+    ) as s_client:
         # Rest of application here...
 
 
@@ -481,7 +481,7 @@ async def amain():
 
     async with Ship24(
         authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-    ) as ship24:
+    ) as s_client:
         # Rest of application here...
 ```
 <!-- End Resource Management [resource-management] -->
@@ -493,11 +493,11 @@ You can setup your SDK to emit debug logs for SDK requests and responses.
 
 You can pass your own logger class directly into your SDK.
 ```python
-from ship_24 import Ship24
+from ship24 import Ship24
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
-s = Ship24(debug_logger=logging.getLogger("ship_24"))
+s = Ship24(debug_logger=logging.getLogger("ship24"))
 ```
 
 You can also enable a default debug logger by setting an environment variable `SHIP24_DEBUG` to true.

@@ -14,7 +14,7 @@ targets:
         sourceRevisionDigest: sha256:4023e9e93cf0eb00cade75a889cd7c96eeda6a59662ed2400311b503dbbe0cd8
         sourceBlobDigest: sha256:2d2a4bb3f6d72964f75826a61261fea85ff3fd90106fd2022a7cb583170ee3c1
         codeSamplesNamespace: ship-24-tracking-api-python-code-samples
-        codeSamplesRevisionDigest: sha256:314e2b21a92c2c3b0d90029d88260d1d4c18d5b5d91dce0ff23f2f0db741f3cd
+        codeSamplesRevisionDigest: sha256:b2925b1ede57b8fed5744b95738daa71e82baa0c72b06e420fded5a26ca4d9d3
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

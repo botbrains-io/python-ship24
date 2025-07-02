@@ -15,14 +15,14 @@ This endpoint will return the list of all couriers supported by Ship24, identifi
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.couriers.get_couriers()
+    res = s_client.couriers.get_couriers()
 
     # Handle response
     print(res)

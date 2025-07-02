@@ -5,8 +5,8 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.575.1
   generationVersion: 2.648.1
-  releaseVersion: 0.1.2
-  configChecksum: ed6d5c2164497db622f14e94852ad1e6
+  releaseVersion: 0.1.3
+  configChecksum: d405e346ebbf8d7c488b14aae37156b1
 features:
   python:
     acceptHeaders: 3.0.0
@@ -124,66 +124,66 @@ generatedFiles:
   - pylintrc
   - pyproject.toml
   - scripts/publish.sh
-  - src/ship_24/__init__.py
-  - src/ship_24/_hooks/__init__.py
-  - src/ship_24/_hooks/sdkhooks.py
-  - src/ship_24/_hooks/types.py
-  - src/ship_24/_version.py
-  - src/ship_24/api_for_per_call_plans.py
-  - src/ship_24/basesdk.py
-  - src/ship_24/couriers.py
-  - src/ship_24/errors/__init__.py
-  - src/ship_24/errors/apierror.py
-  - src/ship_24/errors/bulk_create_trackers_response_error.py
-  - src/ship_24/errors/error_response_format.py
-  - src/ship_24/errors/no_response_error.py
-  - src/ship_24/errors/responsevalidationerror.py
-  - src/ship_24/errors/ship24error.py
-  - src/ship_24/httpclient.py
-  - src/ship_24/models/__init__.py
-  - src/ship_24/models/bulk_create_trackers_request.py
-  - src/ship_24/models/bulk_create_trackers_response.py
-  - src/ship_24/models/bulk_create_trackersop.py
-  - src/ship_24/models/create_tracker_and_get_tracking_results_response.py
-  - src/ship_24/models/create_tracker_and_get_tracking_resultsop.py
-  - src/ship_24/models/create_trackerop.py
-  - src/ship_24/models/error_response_format.py
-  - src/ship_24/models/event.py
-  - src/ship_24/models/get_couriersop.py
-  - src/ship_24/models/get_tracker_by_trackeridop.py
-  - src/ship_24/models/get_tracking_results_of_tracker_by_trackeridop.py
-  - src/ship_24/models/get_tracking_results_of_trackers_by_tracking_numberop.py
-  - src/ship_24/models/get_trackingop.py
-  - src/ship_24/models/list_trackersop.py
-  - src/ship_24/models/resend_webhooksop.py
-  - src/ship_24/models/security.py
-  - src/ship_24/models/shipment.py
-  - src/ship_24/models/statistics.py
-  - src/ship_24/models/tracker.py
-  - src/ship_24/models/tracker_create_request.py
-  - src/ship_24/models/update_tracker_by_trackeridop.py
-  - src/ship_24/py.typed
-  - src/ship_24/sdk.py
-  - src/ship_24/sdkconfiguration.py
-  - src/ship_24/trackers.py
-  - src/ship_24/types/__init__.py
-  - src/ship_24/types/basemodel.py
-  - src/ship_24/utils/__init__.py
-  - src/ship_24/utils/annotations.py
-  - src/ship_24/utils/datetimes.py
-  - src/ship_24/utils/enums.py
-  - src/ship_24/utils/eventstreaming.py
-  - src/ship_24/utils/forms.py
-  - src/ship_24/utils/headers.py
-  - src/ship_24/utils/logger.py
-  - src/ship_24/utils/metadata.py
-  - src/ship_24/utils/queryparams.py
-  - src/ship_24/utils/requestbodies.py
-  - src/ship_24/utils/retries.py
-  - src/ship_24/utils/security.py
-  - src/ship_24/utils/serializers.py
-  - src/ship_24/utils/url.py
-  - src/ship_24/utils/values.py
+  - src/ship24/__init__.py
+  - src/ship24/_hooks/__init__.py
+  - src/ship24/_hooks/sdkhooks.py
+  - src/ship24/_hooks/types.py
+  - src/ship24/_version.py
+  - src/ship24/api_for_per_call_plans.py
+  - src/ship24/basesdk.py
+  - src/ship24/couriers.py
+  - src/ship24/errors/__init__.py
+  - src/ship24/errors/apierror.py
+  - src/ship24/errors/bulk_create_trackers_response_error.py
+  - src/ship24/errors/error_response_format.py
+  - src/ship24/errors/no_response_error.py
+  - src/ship24/errors/responsevalidationerror.py
+  - src/ship24/errors/ship24error.py
+  - src/ship24/httpclient.py
+  - src/ship24/models/__init__.py
+  - src/ship24/models/bulk_create_trackers_request.py
+  - src/ship24/models/bulk_create_trackers_response.py
+  - src/ship24/models/bulk_create_trackersop.py
+  - src/ship24/models/create_tracker_and_get_tracking_results_response.py
+  - src/ship24/models/create_tracker_and_get_tracking_resultsop.py
+  - src/ship24/models/create_trackerop.py
+  - src/ship24/models/error_response_format.py
+  - src/ship24/models/event.py
+  - src/ship24/models/get_couriersop.py
+  - src/ship24/models/get_tracker_by_trackeridop.py
+  - src/ship24/models/get_tracking_results_of_tracker_by_trackeridop.py
+  - src/ship24/models/get_tracking_results_of_trackers_by_tracking_numberop.py
+  - src/ship24/models/get_trackingop.py
+  - src/ship24/models/list_trackersop.py
+  - src/ship24/models/resend_webhooksop.py
+  - src/ship24/models/security.py
+  - src/ship24/models/shipment.py
+  - src/ship24/models/statistics.py
+  - src/ship24/models/tracker.py
+  - src/ship24/models/tracker_create_request.py
+  - src/ship24/models/update_tracker_by_trackeridop.py
+  - src/ship24/py.typed
+  - src/ship24/sdk.py
+  - src/ship24/sdkconfiguration.py
+  - src/ship24/trackers.py
+  - src/ship24/types/__init__.py
+  - src/ship24/types/basemodel.py
+  - src/ship24/utils/__init__.py
+  - src/ship24/utils/annotations.py
+  - src/ship24/utils/datetimes.py
+  - src/ship24/utils/enums.py
+  - src/ship24/utils/eventstreaming.py
+  - src/ship24/utils/forms.py
+  - src/ship24/utils/headers.py
+  - src/ship24/utils/logger.py
+  - src/ship24/utils/metadata.py
+  - src/ship24/utils/queryparams.py
+  - src/ship24/utils/requestbodies.py
+  - src/ship24/utils/retries.py
+  - src/ship24/utils/security.py
+  - src/ship24/utils/serializers.py
+  - src/ship24/utils/url.py
+  - src/ship24/utils/values.py
 examples:
   create-tracker:
     speakeasy-default-create-tracker:

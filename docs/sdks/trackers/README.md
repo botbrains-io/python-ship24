@@ -25,14 +25,14 @@ This endpoint allows you to create a new `Tracker`, based on the specified infor
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.create_tracker()
+    res = s_client.trackers.create_tracker()
 
     # Handle response
     print(res)
@@ -65,14 +65,14 @@ This endpoint return a list of all existing `Trackers`, using page-based paginat
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.list_trackers(page=275139, limit=821673)
+    res = s_client.trackers.list_trackers(page=275139, limit=821673)
 
     # Handle response
     print(res)
@@ -116,14 +116,14 @@ Additionally, the response will provide details about the created trackers and a
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.bulk_create_trackers()
+    res = s_client.trackers.bulk_create_trackers()
 
     # Handle response
     print(res)
@@ -162,14 +162,14 @@ This endpoint creates a new `Tracker` on the specified tracking number , if it d
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.create_tracker_and_get_tracking_results()
+    res = s_client.trackers.create_tracker_and_get_tracking_results()
 
     # Handle response
     print(res)
@@ -202,14 +202,14 @@ This endpoint return an existing `Tracker` for a given identifier.
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.get_tracker_by_tracker_id(tracker_id="<id>")
+    res = s_client.trackers.get_tracker_by_tracker_id(tracker_id="<id>")
 
     # Handle response
     print(res)
@@ -250,14 +250,14 @@ This endpoint allows to modify an existing `Tracker` matching with the given ide
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.update_tracker_by_tracker_id(tracker_id="<id>")
+    res = s_client.trackers.update_tracker_by_tracker_id(tracker_id="<id>")
 
     # Handle response
     print(res)
@@ -301,14 +301,14 @@ Unlike the `/v1/trackers/track` endpoint, a **`Tracker`** **must first be create
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.get_tracking_results_of_trackers_by_tracking_number(tracking_number="<value>")
+    res = s_client.trackers.get_tracking_results_of_trackers_by_tracking_number(tracking_number="<value>")
 
     # Handle response
     print(res)
@@ -345,14 +345,14 @@ Unlike the `/v1/trackers/track` endpoint, a **`Tracker`** **must first be create
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.get_tracking_results_of_tracker_by_tracker_id(tracker_id="<id>")
+    res = s_client.trackers.get_tracking_results_of_tracker_by_tracker_id(tracker_id="<id>")
 
     # Handle response
     print(res)
@@ -388,14 +388,14 @@ This can be useful in case you missed some webhook messages or if you need to re
 
 ```python
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.resend_webhooks(tracker_id="<id>")
+    res = s_client.trackers.resend_webhooks(tracker_id="<id>")
 
     # Handle response
     print(res)

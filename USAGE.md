@@ -2,14 +2,14 @@
 ```python
 # Synchronous Example
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 
 with Ship24(
     authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-) as ship24:
+) as s_client:
 
-    res = ship24.trackers.create_tracker()
+    res = s_client.trackers.create_tracker()
 
     # Handle response
     print(res)
@@ -22,15 +22,15 @@ The same SDK client can also be used to make asychronous requests by importing a
 # Asynchronous Example
 import asyncio
 import os
-from ship_24 import Ship24
+from ship24 import Ship24
 
 async def main():
 
     async with Ship24(
         authorization=os.getenv("SHIP24_AUTHORIZATION", ""),
-    ) as ship24:
+    ) as s_client:
 
-        res = await ship24.trackers.create_tracker_async()
+        res = await s_client.trackers.create_tracker_async()
 
         # Handle response
         print(res)
