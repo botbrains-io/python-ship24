@@ -1,0 +1,19 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    Ship24 Tracking API:
+        inputs:
+            - location: openapi.yaml
+        output: .speakeasy/out.openapi.yaml
+        registry:
+            location: registry.speakeasyapi.dev/botbrains/zendesksdk/ship-24-tracking-api
+targets:
+    ship-24:
+        target: python
+        source: Ship24 Tracking API
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/botbrains/zendesksdk/ship-24-tracking-api-python-code-samples
+            labelOverride:
+                fixedValue: Python (SDK)
+            blocking: false

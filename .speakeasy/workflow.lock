@@ -1,0 +1,37 @@
+speakeasyVersion: 1.575.1
+sources:
+    Ship24 Tracking API:
+        sourceNamespace: ship-24-tracking-api
+        sourceRevisionDigest: sha256:e8da686913275262d315ca1b243d566968f3f94fcc73a15991e96126fe770cb9
+        sourceBlobDigest: sha256:f6dd0ae1093be91d8e191f0469627b691409eb70474fc0be99afd88eb72f585e
+        tags:
+            - latest
+            - 1.0.0
+targets:
+    ship-24:
+        source: Ship24 Tracking API
+        sourceNamespace: ship-24-tracking-api
+        sourceRevisionDigest: sha256:e8da686913275262d315ca1b243d566968f3f94fcc73a15991e96126fe770cb9
+        sourceBlobDigest: sha256:f6dd0ae1093be91d8e191f0469627b691409eb70474fc0be99afd88eb72f585e
+        codeSamplesNamespace: ship-24-tracking-api-python-code-samples
+        codeSamplesRevisionDigest: sha256:5bbeeb5e24fdec34ebbb6406d903781a865d148bf2837c3f8eb141c34852a1a6
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        Ship24 Tracking API:
+            inputs:
+                - location: openapi.yaml
+            output: .speakeasy/out.openapi.yaml
+            registry:
+                location: registry.speakeasyapi.dev/botbrains/zendesksdk/ship-24-tracking-api
+    targets:
+        ship-24:
+            target: python
+            source: Ship24 Tracking API
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/botbrains/zendesksdk/ship-24-tracking-api-python-code-samples
+                labelOverride:
+                    fixedValue: Python (SDK)
+                blocking: false

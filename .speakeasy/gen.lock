@@ -1,0 +1,291 @@
+lockVersion: 2.0.0
+id: f1b740a9-dcfc-422b-ab52-f143d8b00f15
+management:
+  docChecksum: 05e0837999cf0a549729ef3bddac147a
+  docVersion: 1.0.0
+  speakeasyVersion: 1.575.1
+  generationVersion: 2.648.1
+  releaseVersion: 0.1.0
+  configChecksum: b566893147c6d3e957bcfe8b9cbca7f9
+features:
+  python:
+    acceptHeaders: 3.0.0
+    additionalDependencies: 1.0.0
+    core: 5.19.3
+    defaultEnabledRetries: 0.2.0
+    deprecations: 3.0.2
+    devContainers: 3.0.0
+    enumUnions: 0.1.0
+    envVarSecurityUsage: 0.3.2
+    flatRequests: 1.0.1
+    flattening: 3.1.1
+    globalSecurity: 3.0.3
+    globalSecurityCallbacks: 1.0.0
+    globalSecurityFlattening: 1.0.0
+    globalServerURLs: 3.1.1
+    methodArguments: 1.0.2
+    nullables: 1.0.1
+    responseFormat: 1.0.1
+    retries: 3.0.2
+    sdkHooks: 1.1.0
+    unions: 3.0.4
+generatedFiles:
+  - .devcontainer/README.md
+  - .devcontainer/devcontainer.json
+  - .devcontainer/setup.sh
+  - .gitattributes
+  - .python-version
+  - .vscode/settings.json
+  - USAGE.md
+  - docs/errors/bulkcreatetrackersresponseerror.md
+  - docs/errors/errorresponseformat.md
+  - docs/models/bulkcreatetrackersrequest.md
+  - docs/models/bulkcreatetrackersresponse.md
+  - docs/models/bulkcreatetrackersresponsedata.md
+  - docs/models/bulkcreatetrackersresponseerror.md
+  - docs/models/bulkcreatetrackersresponseresponse.md
+  - docs/models/courier.md
+  - docs/models/createtrackerandgettrackingresultsdata.md
+  - docs/models/createtrackerandgettrackingresultsresponse.md
+  - docs/models/createtrackerandgettrackingresultsresponsebody.md
+  - docs/models/createtrackerandgettrackingresultstracking.md
+  - docs/models/createtrackerdata.md
+  - docs/models/createtrackerresponse.md
+  - docs/models/createtrackerresponsebody.md
+  - docs/models/dataerror.md
+  - docs/models/delivery.md
+  - docs/models/errorresponseformatdata.md
+  - docs/models/errorresponseformaterror.md
+  - docs/models/event.md
+  - docs/models/getcouriersdata.md
+  - docs/models/getcouriersresponse.md
+  - docs/models/getcouriersresponsebody.md
+  - docs/models/gettrackerbytrackeridrequest.md
+  - docs/models/gettrackerbytrackeridresponse.md
+  - docs/models/gettrackerbytrackeridsearchby.md
+  - docs/models/gettrackingcouriercode.md
+  - docs/models/gettrackingdata.md
+  - docs/models/gettrackingrequest.md
+  - docs/models/gettrackingresponse.md
+  - docs/models/gettrackingresponsebody.md
+  - docs/models/gettrackingresultsoftrackerbytrackeriddata.md
+  - docs/models/gettrackingresultsoftrackerbytrackeridrequest.md
+  - docs/models/gettrackingresultsoftrackerbytrackeridresponse.md
+  - docs/models/gettrackingresultsoftrackerbytrackeridresponsebody.md
+  - docs/models/gettrackingresultsoftrackerbytrackeridsearchby.md
+  - docs/models/gettrackingresultsoftrackerbytrackeridtracking.md
+  - docs/models/gettrackingresultsoftrackersbytrackingnumberdata.md
+  - docs/models/gettrackingresultsoftrackersbytrackingnumberrequest.md
+  - docs/models/gettrackingresultsoftrackersbytrackingnumberresponse.md
+  - docs/models/gettrackingresultsoftrackersbytrackingnumberresponsebody.md
+  - docs/models/gettrackingresultsoftrackersbytrackingnumbertracking.md
+  - docs/models/gettrackingtracking.md
+  - docs/models/itemstatus.md
+  - docs/models/listtrackersdata.md
+  - docs/models/listtrackersrequest.md
+  - docs/models/listtrackersresponse.md
+  - docs/models/listtrackersresponsebody.md
+  - docs/models/listtrackersresponseresult.md
+  - docs/models/listtrackersxmlresponsebody.md
+  - docs/models/requiredfield.md
+  - docs/models/resendwebhooksdata.md
+  - docs/models/resendwebhooksrequest.md
+  - docs/models/resendwebhooksresponse.md
+  - docs/models/resendwebhooksresponsebody.md
+  - docs/models/resendwebhookssearchby.md
+  - docs/models/resendwebhookssummary.md
+  - docs/models/security.md
+  - docs/models/settings.md
+  - docs/models/shipment.md
+  - docs/models/shipmentrecipient.md
+  - docs/models/sort.md
+  - docs/models/statistics.md
+  - docs/models/status.md
+  - docs/models/summary.md
+  - docs/models/timestamps.md
+  - docs/models/tracker.md
+  - docs/models/trackercouriercode.md
+  - docs/models/trackercreaterequest.md
+  - docs/models/trackercreaterequestcouriercode.md
+  - docs/models/trackercreaterequestrecipient.md
+  - docs/models/trackingnumber.md
+  - docs/models/updatetrackerbytrackeridcouriercode.md
+  - docs/models/updatetrackerbytrackeridrequest.md
+  - docs/models/updatetrackerbytrackeridrequestbody.md
+  - docs/models/updatetrackerbytrackeridresponse.md
+  - docs/models/updatetrackerbytrackeridsearchby.md
+  - docs/models/utils/retryconfig.md
+  - docs/sdks/apiforpercallplans/README.md
+  - docs/sdks/couriers/README.md
+  - docs/sdks/ship24/README.md
+  - docs/sdks/trackers/README.md
+  - poetry.toml
+  - py.typed
+  - pylintrc
+  - pyproject.toml
+  - scripts/publish.sh
+  - src/ship_24/__init__.py
+  - src/ship_24/_hooks/__init__.py
+  - src/ship_24/_hooks/sdkhooks.py
+  - src/ship_24/_hooks/types.py
+  - src/ship_24/_version.py
+  - src/ship_24/api_for_per_call_plans.py
+  - src/ship_24/basesdk.py
+  - src/ship_24/couriers.py
+  - src/ship_24/errors/__init__.py
+  - src/ship_24/errors/apierror.py
+  - src/ship_24/errors/bulk_create_trackers_response_error.py
+  - src/ship_24/errors/error_response_format.py
+  - src/ship_24/errors/no_response_error.py
+  - src/ship_24/errors/responsevalidationerror.py
+  - src/ship_24/errors/ship24error.py
+  - src/ship_24/httpclient.py
+  - src/ship_24/models/__init__.py
+  - src/ship_24/models/bulk_create_trackers_request.py
+  - src/ship_24/models/bulk_create_trackers_response.py
+  - src/ship_24/models/bulk_create_trackersop.py
+  - src/ship_24/models/create_tracker_and_get_tracking_resultsop.py
+  - src/ship_24/models/create_trackerop.py
+  - src/ship_24/models/error_response_format.py
+  - src/ship_24/models/event.py
+  - src/ship_24/models/get_couriersop.py
+  - src/ship_24/models/get_tracker_by_trackeridop.py
+  - src/ship_24/models/get_tracking_results_of_tracker_by_trackeridop.py
+  - src/ship_24/models/get_tracking_results_of_trackers_by_tracking_numberop.py
+  - src/ship_24/models/get_trackingop.py
+  - src/ship_24/models/list_trackersop.py
+  - src/ship_24/models/resend_webhooksop.py
+  - src/ship_24/models/security.py
+  - src/ship_24/models/shipment.py
+  - src/ship_24/models/statistics.py
+  - src/ship_24/models/tracker.py
+  - src/ship_24/models/tracker_create_request.py
+  - src/ship_24/models/update_tracker_by_trackeridop.py
+  - src/ship_24/py.typed
+  - src/ship_24/sdk.py
+  - src/ship_24/sdkconfiguration.py
+  - src/ship_24/trackers.py
+  - src/ship_24/types/__init__.py
+  - src/ship_24/types/basemodel.py
+  - src/ship_24/utils/__init__.py
+  - src/ship_24/utils/annotations.py
+  - src/ship_24/utils/datetimes.py
+  - src/ship_24/utils/enums.py
+  - src/ship_24/utils/eventstreaming.py
+  - src/ship_24/utils/forms.py
+  - src/ship_24/utils/headers.py
+  - src/ship_24/utils/logger.py
+  - src/ship_24/utils/metadata.py
+  - src/ship_24/utils/queryparams.py
+  - src/ship_24/utils/requestbodies.py
+  - src/ship_24/utils/retries.py
+  - src/ship_24/utils/security.py
+  - src/ship_24/utils/serializers.py
+  - src/ship_24/utils/url.py
+  - src/ship_24/utils/values.py
+examples:
+  create-tracker:
+    speakeasy-default-create-tracker:
+      responses:
+        "201":
+          application/json: {}
+        "400":
+          application/json: {}
+  list-trackers:
+    speakeasy-default-list-trackers:
+      parameters:
+        query:
+          page: 275139
+          limit: 821673
+      responses:
+        "200":
+          application/json: {}
+          application/xml: "0x91894E6a22"
+          multipart/form-data: "0xcD2dFC9E3b"
+        "401":
+          application/json: {}
+  bulk-create-trackers:
+    speakeasy-default-bulk-create-trackers:
+      responses:
+        "201":
+          application/json: {"status": "partial"}
+        "400":
+          application/json: {"status": "success"}
+        "401":
+          application/json: {}
+  create-tracker-and-get-tracking-results:
+    speakeasy-default-create-tracker-and-get-tracking-results:
+      responses:
+        "200":
+          application/json: {}
+        "401":
+          application/json: {}
+  get-tracker-by-trackerId:
+    speakeasy-default-get-tracker-by-tracker-id:
+      parameters:
+        path:
+          trackerId: "<id>"
+      responses:
+        "200":
+          application/json: {"trackerId": "<id>", "trackingNumber": "<value>", "shipmentReference": "<value>", "clientTrackerId": "<id>", "isSubscribed": true, "isTracked": true, "createdAt": "2023-06-24T08:47:26.888Z"}
+        "404":
+          application/json: {}
+        "401":
+          application/json: {}
+  update-tracker-by-trackerId:
+    speakeasy-default-update-tracker-by-tracker-id:
+      parameters:
+        path:
+          trackerId: "<id>"
+      responses:
+        "200":
+          application/json: {"trackerId": "<id>", "trackingNumber": "<value>", "shipmentReference": "<value>", "clientTrackerId": "<id>", "isSubscribed": false, "isTracked": false, "createdAt": "2024-09-26T17:00:22.470Z"}
+        "400":
+          application/json: {}
+  get-tracking-results-of-trackers-by-tracking-number:
+    speakeasy-default-get-tracking-results-of-trackers-by-tracking-number:
+      parameters:
+        path:
+          trackingNumber: "<value>"
+      responses:
+        "200":
+          application/json: {}
+        "401":
+          application/json: {}
+  get-tracking-results-of-tracker-by-trackerId:
+    speakeasy-default-get-tracking-results-of-tracker-by-tracker-id:
+      parameters:
+        path:
+          trackerId: "<id>"
+      responses:
+        "200":
+          application/json: {}
+        "404":
+          application/json: {}
+        "401":
+          application/json: {}
+  resend-webhooks:
+    speakeasy-default-resend-webhooks:
+      parameters:
+        path:
+          trackerId: "<id>"
+      responses:
+        "201":
+          application/json: {}
+        "401":
+          application/json: {}
+  get-couriers:
+    speakeasy-default-get-couriers:
+      responses:
+        "200":
+          application/json: {}
+        "401":
+          application/json: {}
+  get-tracking:
+    speakeasy-default-get-tracking:
+      responses:
+        "201":
+          application/json: {}
+        "400":
+          application/json: {}
+examplesVersion: 1.0.2
