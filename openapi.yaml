@@ -28,17 +28,55 @@ info:
     name: Ship24
     url: https://www.ship24.com/contact-us
 servers:
-- url: https://api.ship24.com
+  - url: https://api.ship24.com
 components:
   securitySchemes:
     Authorization:
-      name: Bearer your_api_key
+      name: Authorization
       type: apiKey
       in: header
       description: |-
         The Ship24 API uses API keys to authenticate requests. You can [view and manage them in your Dashboard](https://dashboard.ship24.com/integrations/api-keys). A `Default` API key is created after you subscribe to a plan.
 
         To authenticate your requests, include an `Authorization` HTTP header to all your requests with the following value: `Bearer your_api_key`. (Replace `your_api_key` by the one from your dashboard and don't forget the `Bearer` prefix.)
+  responses:
+    Unauthorized:
+      description: Unauthorized - No valid API key provided.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/error-response-format"
+    Forbidden:
+      description: Forbidden - The API key provided does not have permissions to perform the request.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/error-response-format"
+    NotFound:
+      description: Not Found - The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/error-response-format"
+    TooManyRequests:
+      description: Rate limit exceeded. The client has sent too many requests in a given amount of time.
+      headers:
+        Retry-After:
+          description: The number of seconds to wait before making a new request.
+          schema:
+            type: integer
+        RateLimit-Limit:
+          description: The total number of requests allowed in the current time window.
+          schema:
+            type: integer
+        RateLimit-Remaining:
+          description: The number of remaining requests in the current time window.
+          schema:
+            type: integer
+        RateLimit-Reset:
+          description: The remaining time in seconds until the rate limit resets.
+          schema:
+            type: integer
   schemas:
     tracker:
       type: object
@@ -53,13 +91,13 @@ components:
           description: The tracking number which the tracker is following.
         shipmentReference:
           type:
-          - string
-          - 'null'
-          description: The `shipmentReference` you provided at the tracker's creation.
+            - string
+            - "null"
+          description: Your reference for this shipment, provided at the tracker's creation. Unlike clientTrackerId, this value is not validated for uniqueness.
         courierCode:
           type:
-          - array
-          - string
+            - array
+            - string
           description: Code of the courier(s) handling the shipment.
           minItems: 0
           maxItems: 3
@@ -67,16 +105,18 @@ components:
             type: string
         clientTrackerId:
           type:
-          - string
-          - 'null'
-          description: The `clientTrackerId` you provided at the tracker's creation.
+            - string
+            - "null"
+          description: Your unique identifier for this shipment, provided at the tracker's creation. Ship24 validates its uniqueness across all your active trackers.
         isSubscribed:
           type: boolean
-          description: Indicates whether the tracker is active. A value of `false`
+          description:
+            Indicates whether the tracker is active. A value of `false`
             means the tracker is archived and will not be used for tracking.
         isTracked:
           type: boolean
-          description: Indicates whether we are actively tracking the parcel. A value
+          description:
+            Indicates whether we are actively tracking the parcel. A value
             of `true` means new data is being searched for, while `false` indicates
             tracking has stopped due to delivery, inactivity, or unsubscription. Existing
             tracking results will remain accessible; however, new data will not be
@@ -86,13 +126,13 @@ components:
           format: date-time
           description: The date and time at which the tracker was created.
       required:
-      - trackerId
-      - trackingNumber
-      - shipmentReference
-      - clientTrackerId
-      - isSubscribed
-      - isTracked
-      - createdAt
+        - trackerId
+        - trackingNumber
+        - shipmentReference
+        - clientTrackerId
+        - isSubscribed
+        - isTracked
+        - createdAt
     tracking:
       type: object
       title: Tracking
@@ -152,17 +192,17 @@ components:
         ```
       properties:
         tracker:
-          $ref: '#/components/schemas/tracker'
+          $ref: "#/components/schemas/tracker"
         shipment:
-          $ref: '#/components/schemas/shipment'
+          $ref: "#/components/schemas/shipment"
         events:
           type: array
           items:
-            $ref: '#/components/schemas/event'
+            $ref: "#/components/schemas/event"
         statistics:
-          $ref: '#/components/schemas/statistics'
+          $ref: "#/components/schemas/statistics"
         metadata:
-          $ref: '#/components/schemas/metadata'
+          $ref: "#/components/schemas/metadata"
     statistics:
       type: object
       x-internal: true
@@ -178,52 +218,59 @@ components:
           properties:
             infoReceivedDatetime:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
               format: logistic-date-time
-              description: Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
+              description:
+                Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
                 of the first `info_received` [milestone](https://docs.ship24.com/status/#statusmilestone).
             inTransitDatetime:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
               format: logistic-date-time
-              description: Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
+              description:
+                Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
                 of the first `in_transit` [milestone](https://docs.ship24.com/status/#statusmilestone).
             outForDeliveryDatetime:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
               format: logistic-date-time
-              description: Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
+              description:
+                Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
                 of the first `out_for_delivery` [milestone](https://docs.ship24.com/status/#statusmilestone).
             failedAttemptDatetime:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
               format: logistic-date-time
-              description: Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
+              description:
+                Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
                 of the first `failed_attempt` [milestone](https://docs.ship24.com/status/#statusmilestone).
             availableForPickupDatetime:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
               format: logistic-date-time
-              description: Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
+              description:
+                Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
                 of the first `available_for_pickup` [milestone](https://docs.ship24.com/status/#statusmilestone).
             exceptionDatetime:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
               format: logistic-date-time
-              description: Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
+              description:
+                Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
                 of the first `exception` [milestone](https://docs.ship24.com/status/#statusmilestone).
             deliveredDatetime:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
               format: logistic-date-time
-              description: Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
+              description:
+                Occurrence [date and time](https://docs.ship24.com/data-format#logistics-date-and-time)
                 of the first `delivered` [milestone](https://docs.ship24.com/status/#statusmilestone).
     metadata:
       type: object
@@ -243,58 +290,62 @@ components:
       properties:
         shipmentId:
           type:
-          - string
-          - 'null'
+            - string
+            - "null"
           description: Unique identifier of the parcel in Ship24 system.
         statusCode:
           type:
-          - string
-          - 'null'
-          description: '[statusCode](https://docs.ship24.com/status/#statuscode-and-statuscategory)
-            of the shipment.'
+            - string
+            - "null"
+          description:
+            "[statusCode](https://docs.ship24.com/status/#statuscode-and-statuscategory)
+            of the shipment."
         statusCategory:
           type:
-          - string
-          - 'null'
-          description: '[statusCategory](https://docs.ship24.com/status/#statuscode-and-statuscategory)
-            of the shipment.'
+            - string
+            - "null"
+          description:
+            "[statusCategory](https://docs.ship24.com/status/#statuscode-and-statuscategory)
+            of the shipment."
         statusMilestone:
           type: string
-          description: '[statusMilestone](https:docs.ship24.com/status/#statusmilestone)
-            of the shipment.'
+          description:
+            "[statusMilestone](https:docs.ship24.com/status/#statusmilestone)
+            of the shipment."
         originCountryCode:
           type:
-          - string
-          - 'null'
+            - string
+            - "null"
           description: Detected country code of origin.
         destinationCountryCode:
           type:
-          - string
-          - 'null'
+            - string
+            - "null"
           description: Detected country code of destination.
         delivery:
           type: object
           properties:
             estimatedDeliveryDate:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
               format: date-time
-              description: 'Estimated delivery date of the shipment, if provided by
-                the courier. Format: [Date and Time in UTC](http://docs.ship24.com/data-format#logistics-date-and-time)'
+              description:
+                "Estimated delivery date of the shipment, if provided by
+                the courier. Format: [Date and Time in UTC](http://docs.ship24.com/data-format#logistics-date-and-time)"
             service:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
               description: Name of logistics service or product for the shipment.
             signedBy:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
               description: Name of the person who signed for the shipment.
         trackingNumbers:
           type:
-          - array
+            - array
           description: List of tracking numbers linked to the shipment.
           items:
             type: object
@@ -304,30 +355,30 @@ components:
                 description: Tracking number.
         recipient:
           type:
-          - object
-          - 'null'
+            - object
+            - "null"
           description: Information on the recipient.
           properties:
             name:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
             address:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
             postCode:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
             city:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
             subdivision:
               type:
-              - string
-              - 'null'
+                - string
+                - "null"
     event:
       type: object
       x-internal: true
@@ -340,7 +391,8 @@ components:
           description: The original tracking number used to create the Tracker.
         eventTrackingNumber:
           type: string
-          description: The tracking number associated with the event, on which the
+          description:
+            The tracking number associated with the event, on which the
             event has been found.
         status:
           type: string
@@ -349,57 +401,64 @@ components:
         occurrenceDatetime:
           type: string
           format: logistic-date-time
-          description: '[Date and time](http://docs.ship24.com/data-format#logistics-date-and-time)
-            at which the event occurred.'
+          description:
+            "[Date and time](http://docs.ship24.com/data-format#logistics-date-and-time)
+            at which the event occurred."
         order:
           type:
-          - integer
-          - 'null'
+            - integer
+            - "null"
           nullable: true
-          description: Indicate the order of the events in case the occurrenceDatetime
+          description:
+            Indicate the order of the events in case the occurrenceDatetime
             is the same between multiple events (lower is older).
         location:
           type:
-          - string
-          - 'null'
+            - string
+            - "null"
           nullable: true
           description: Location raw text of the event.
         sourceCode:
           type:
-          - string
-          - 'null'
+            - string
+            - "null"
           nullable: true
-          description: Internal code of the source used to get this event. Please
+          description:
+            Internal code of the source used to get this event. Please
             note that those codes may evolve at any point in time.
         courierCode:
           type:
-          - string
-          - 'null'
+            - string
+            - "null"
           nullable: true
-          description: Code of the courier linked to this event, refers to our Couriers
+          description:
+            Code of the courier linked to this event, refers to our Couriers
             list. Please note that those codes may evolve at any point in time.
         statusCode:
           type:
-          - string
-          - 'null'
+            - string
+            - "null"
           nullable: true
-          description: '[statusCode](https://docs.ship24.com/status/#statuscode-and-statuscategory)
+          description:
+            "[statusCode](https://docs.ship24.com/status/#statuscode-and-statuscategory)
             of the event.
 
-            '
+            "
         statusCategory:
           type:
-          - string
-          - 'null'
+            - string
+            - "null"
           nullable: true
-          description: '[statusCategory](https://docs.ship24.com/status/#statuscode-and-statuscategory)
+          description:
+            "[statusCategory](https://docs.ship24.com/status/#statuscode-and-statuscategory)
             of the event.
 
-            '
+            "
         statusMilestone:
           type: string
-          description: '[statusMilestone](https://docs.ship24.com/status/#statusmilestone)
-            of the shipment at the time of the event.'
+          description:
+            "[statusMilestone](https://docs.ship24.com/status/#statusmilestone)
+            of the shipment at the time of the event."
         datetime:
           deprecated: true
           type: string
@@ -426,8 +485,8 @@ components:
                 type: string
         data:
           type:
-          - object
-          - 'null'
+            - object
+            - "null"
     tracker-create-request:
       title: Tracker creation payload
       type: object
@@ -441,11 +500,13 @@ components:
           description: Tracking number of the shipment.
         shipmentReference:
           type: string
-          description: Your reference for this shipment. Will be provided in our webhooks
+          description:
+            Your reference for this shipment. Will be provided in our webhooks
             or API responses for this tracker.
         clientTrackerId:
           type: string
-          description: Your unique identifier for this shipment. Will be provided
+          description:
+            Your unique identifier for this shipment. Will be provided
             in our webhooks or API responses for this tracker.
         originCountryCode:
           type: string
@@ -453,17 +514,23 @@ components:
           format: ISO 3166-1 alpha-2/alpha-3
         destinationCountryCode:
           type: string
-          description: "Recipient country code - \U0001F4CC Recommended to improve\
+          description:
+            "Recipient country code - \U0001F4CC Recommended to improve\
             \ tracking accuracy"
           format: ISO 3166-1 alpha-2/alpha-3
         destinationPostCode:
           type: string
-          description: "Recipient Post code (or ZIP code)  - \U0001F4CC Recommended\
+          description:
+            "Recipient Post code (or ZIP code)  - \U0001F4CC Recommended\
             \ to improve tracking accuracy"
+          minLength: 1
+          maxLength: 32
+          pattern: ^[a-zA-Z0-9- ._/]*$
         shippingDate:
           type: string
           format: date-time
-          description: "Date at which the shipment has been shipped  - \U0001F4CC\
+          description:
+            "Date at which the shipment has been shipped  - \U0001F4CC\
             \ Recommended to improve tracking accuracy: providing the shipping date\
             \ helps us accurately identify the shipment and improves our ability to\
             \ retrieve the correct data. However, an inaccurate shipping date could\
@@ -472,9 +539,10 @@ components:
             \ give or take a few days. [Format](http://docs.ship24.com/data-format#logistics-date-and-time)"
         courierCode:
           type:
-          - array
-          - string
-          description: "Code of the courier(s) handling the shipment (Up to 3 max)\
+            - array
+            - string
+          description:
+            "Code of the courier(s) handling the shipment (Up to 3 max)\
             \ (see Couriers list section)  - \U0001F4CC Recommended to improve tracking\
             \ accuracy"
           minItems: 0
@@ -508,12 +576,13 @@ components:
           properties:
             restrictTrackingToCourierCode:
               type: boolean
-              description: If set to `true`, the tracker will only track the courier(s)
+              description:
+                If set to `true`, the tracker will only track the courier(s)
                 specified in the `courierCode` field, if any. Otherwise, Ship24 may
                 extend the tracking to other providers in case the shipment is handled
                 by additional couriers.
       required:
-      - trackingNumber
+        - trackingNumber
     reponse-standard-error:
       type: object
       properties:
@@ -538,10 +607,10 @@ components:
         trackers:
           type: array
           items:
-            $ref: '#/components/schemas/tracker-create-request'
+            $ref: "#/components/schemas/tracker-create-request"
           required: true
       required:
-      - trackers
+        - trackers
     bulk-create-trackers-response:
       title: Bulk create trackers response
       type: object
@@ -558,9 +627,9 @@ components:
             `error`: All creations failed or error on request level. (Status codes 400, 403)
           type: string
           enum:
-          - success
-          - partial
-          - error
+            - success
+            - partial
+            - error
         summary:
           description: Summary of the bulk creation. Null if status is `error`.
           type: object
@@ -579,7 +648,8 @@ components:
               description: Total number of errors (failed creations).
               type: integer
         data:
-          description: Detailed information about each tracker creation. Null if status
+          description:
+            Detailed information about each tracker creation. Null if status
             is `error`.
           type: array
           nullable: true
@@ -590,19 +660,20 @@ components:
                 description: Status of the tracker creation.
                 type: string
                 enum:
-                - created
-                - existing
-                - error
+                  - created
+                  - existing
+                  - error
               inputData:
                 description: Payload used to create the tracker.
-                $ref: '#/components/schemas/tracker-create-request'
+                $ref: "#/components/schemas/tracker-create-request"
               tracker:
                 description: Tracker object. Null if `status` is `error`.
-                $ref: '#/components/schemas/tracker'
+                $ref: "#/components/schemas/tracker"
                 nullable: true
               errors:
-                description: '[Error details](https://docs.ship24.com/errors#error-response-format)
-                  about a single tracker creation. Null if `itemStatus` is not `error`.'
+                description:
+                  "[Error details](https://docs.ship24.com/errors#error-response-format)
+                  about a single tracker creation. Null if `itemStatus` is not `error`."
                 type: array
                 nullable: true
                 items:
@@ -613,14 +684,15 @@ components:
                     message:
                       type: string
                   required:
-                  - code
-                  - message
+                    - code
+                    - message
             required:
-            - itemStatus
-            - inputData
+              - itemStatus
+              - inputData
         error:
-          description: '[Error details](https://docs.ship24.com/errors#error-response-format)
-            of the request. Null if `status` is not `error`.'
+          description:
+            "[Error details](https://docs.ship24.com/errors#error-response-format)
+            of the request. Null if `status` is not `error`."
           type: object
           nullable: true
           properties:
@@ -629,23 +701,24 @@ components:
             message:
               type: string
           required:
-          - code
-          - message
+            - code
+            - message
       required:
-      - status
+        - status
 tags:
-- name: "\U0001F4E6 Trackers"
-- name: "\u2693 Webhooks"
-- name: "\U0001F69A Couriers"
-- name: "\u2795 API for per-call plans"
-  description: "The **Tracking API (Per-call Plans)** is a specific product and associated\
-    \ endpoint on which usage is measured per API Call made. Each API call is synchronously\
-    \ fetching data from couriers which make it slower and more depend on courier's\
-    \ system availability.\n\nOur standard \"Per-shipment\" product & plans remain\
-    \ the best choice as it offers more features, allow faster tracking information\
-    \ fetching with less dependency on courier's system availability at a lower cost\
-    \ overall.\n\n> \u26A0 You need an active \"Per-call\" subscription to use this\
-    \ endpoint."
+  - name: "\U0001F4E6 Trackers"
+  - name: "\u2693 Webhooks"
+  - name: "\U0001F69A Couriers"
+  - name: "\u2795 API for per-call plans"
+    description:
+      "The **Tracking API (Per-call Plans)** is a specific product and associated\
+      \ endpoint on which usage is measured per API Call made. Each API call is synchronously\
+      \ fetching data from couriers which make it slower and more depend on courier's\
+      \ system availability.\n\nOur standard \"Per-shipment\" product & plans remain\
+      \ the best choice as it offers more features, allow faster tracking information\
+      \ fetching with less dependency on courier's system availability at a lower cost\
+      \ overall.\n\n> \u26A0 You need an active \"Per-call\" subscription to use this\
+      \ endpoint."
 webhooks:
   /your-endpoint:
     head:
@@ -654,14 +727,15 @@ webhooks:
         > This endpoint is **NOT** part of the Ship24 API but rather **has to be implemented on your side** in order to receive webhook messages.
         Ship24 will be probing this endpoint using a HEAD request to make sure your server is ready to receive webhooks. A HEAD request and response don't contain any body, you just need to return a 200 OK HTTP code to our HEAD requests. [Learn how to set up and use webhooks](https://docs.ship24.com/webhooks/overview).
       parameters:
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Ship24 will send your allocated webhook secret in each request.
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          description: Ship24 will send your allocated webhook secret in each request.
       responses:
-        '200':
-          description: Indicates that your server is ready to receive requests on
+        "200":
+          description:
+            Indicates that your server is ready to receive requests on
             this endpoint.
       operationId: receive-webhooks-health-check
     post:
@@ -681,34 +755,35 @@ webhooks:
                     type: object
                     properties:
                       metadata:
-                        $ref: '#/components/schemas/metadata'
+                        $ref: "#/components/schemas/metadata"
                       tracker:
-                        $ref: '#/components/schemas/tracker'
+                        $ref: "#/components/schemas/tracker"
                       shipment:
-                        $ref: '#/components/schemas/shipment'
+                        $ref: "#/components/schemas/shipment"
                       events:
                         type: array
                         items:
-                          $ref: '#/components/schemas/event'
+                          $ref: "#/components/schemas/event"
                       statistics:
-                        $ref: '#/components/schemas/statistics'
-        description: 'Ship24 will send the following JSON body:'
+                        $ref: "#/components/schemas/statistics"
+        description: "Ship24 will send the following JSON body:"
       parameters:
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Ship24 will send your allocated webhook secret in each request.
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          description: Ship24 will send your allocated webhook secret in each request.
       responses:
-        '200':
-          description: Indicates that your server successfully processed Ship24's
+        "200":
+          description:
+            Indicates that your server successfully processed Ship24's
             request.
       operationId: receive-webhooks-tracking-results
 paths:
   /public/v1/trackers:
     post:
       tags:
-      - "\U0001F4E6 Trackers"
+        - "\U0001F4E6 Trackers"
       summary: Create a tracker
       description: |-
         This endpoint allows you to create a new `Tracker`, based on the specified information. Once a `Tracker` is created, you will be able to receive webhook notifications and/or fetch its tracking result.
@@ -718,23 +793,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/tracker-create-request'
-      parameters:
-      - name: Content-Type
-        in: header
-        schema:
-          type: string
-        description: application/json; charset=utf-8
-        required: true
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Your `api_key` prefixed with `Bearer`.
-        required: true
+              $ref: "#/components/schemas/tracker-create-request"
+      security:
+        - Authorization: []
       operationId: create-tracker
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
@@ -745,54 +809,59 @@ paths:
                     type: object
                     properties:
                       tracker:
-                        $ref: '#/components/schemas/tracker'
-        '400':
+                        $ref: "#/components/schemas/tracker"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error-response-format'
+                $ref: "#/components/schemas/error-response-format"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
     get:
       tags:
-      - "\U0001F4E6 Trackers"
+        - "\U0001F4E6 Trackers"
       summary: List existing Trackers
-      description: This endpoint return a list of all existing `Trackers`, using page-based
+      description:
+        This endpoint return a list of all existing `Trackers`, using page-based
         pagination.
+      security:
+        - Authorization: []
       parameters:
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Your `api_key` prefixed with `Bearer`.
-        required: true
-      - name: page
-        in: query
-        schema:
-          type: integer
-          minimum: 1
-        description: The page index, starting from 1.
-        required: true
-      - name: limit
-        in: query
-        schema:
-          type: integer
-          minimum: 1
-          maximum: 500
-        description: The maximum number of trackers returned per page.
-        required: true
-      - name: sort
-        in: query
-        schema:
-          type: integer
-          enum:
-          - 1
-          - -1
-        description: Defines the sorting order of trackers. Use `1` for ascending
-          (`createdAt` oldest first) and `-1` for descending (`createdAt` newest first).
-          The default is ascending (`1`) to ensure stable pagination.
-        required: false
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+          description: The page index, starting from 1.
+          required: true
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+          description: The maximum number of trackers returned per page.
+          required: true
+        - name: sort
+          in: query
+          schema:
+            type: integer
+            enum:
+              - 1
+              - -1
+          description:
+            Defines the sorting order of trackers. Use `1` for ascending
+            (`createdAt` oldest first) and `-1` for descending (`createdAt` newest first).
+            The default is ascending (`1`) to ensure stable pagination.
+          required: false
       responses:
-        '200':
+        "200":
+          description: OK
           content:
             application/json:
               schema:
@@ -804,7 +873,7 @@ paths:
                       trackers:
                         type: array
                         items:
-                          $ref: '#/components/schemas/tracker'
+                          $ref: "#/components/schemas/tracker"
             application/xml:
               schema:
                 type: object
@@ -838,12 +907,18 @@ paths:
                     type: string
                   trackingUrl:
                     type: string
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       operationId: list-trackers
     parameters: []
   /public/v1/trackers/bulk:
     post:
       tags:
-      - "\U0001F4E6 Trackers"
+        - "\U0001F4E6 Trackers"
       summary: Bulk create trackers
       description: |-
         This endpoint allows you to create up to 100 new `Trackers` in a single operation, based on the specified information. Once the `Trackers` are created, you will be able to receive webhook notifications and/or fetch their tracking results.
@@ -860,52 +935,46 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/bulk-create-trackers-request'
-      parameters:
-      - name: Content-Type
-        in: header
-        schema:
-          type: string
-        description: application/json; charset=utf-8
-        required: true
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Your `api_key` prefixed with `Bearer`.
-        required: true
+              $ref: "#/components/schemas/bulk-create-trackers-request"
+      security:
+        - Authorization: []
       operationId: bulk-create-trackers
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/bulk-create-trackers-response'
-        '207':
+                $ref: "#/components/schemas/bulk-create-trackers-response"
+        "207":
           description: Partially Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/bulk-create-trackers-response'
-        '400':
+                $ref: "#/components/schemas/bulk-create-trackers-response"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/bulk-create-trackers-response'
-        '403':
+                $ref: "#/components/schemas/bulk-create-trackers-response"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/bulk-create-trackers-response'
+                $ref: "#/components/schemas/bulk-create-trackers-response"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
   /public/v1/trackers/track:
     post:
       tags:
-      - "\U0001F4E6 Trackers"
+        - "\U0001F4E6 Trackers"
       summary: Create a tracker and get tracking results
-      description: "This endpoint creates a new `Tracker` on the specified tracking\
+      description:
+        "This endpoint creates a new `Tracker` on the specified tracking\
         \ number , if it does not exist, and returns the tracking results directly.\
         \ We advise using this endpoint if you are not interested in receiving webhook\
         \ notifications and just want to fetch tracking results. This way, you can\
@@ -926,22 +995,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/tracker-create-request'
-      parameters:
-      - name: Content-Type
-        in: header
-        schema:
-          type: string
-        description: application/json; charset=utf-8
-        required: true
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Your `api_key` prefixed with `Bearer`.
-        required: true
+              $ref: "#/components/schemas/tracker-create-request"
+      security:
+        - Authorization: []
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -957,66 +1015,73 @@ paths:
                           type: object
                           properties:
                             tracker:
-                              $ref: '#/components/schemas/tracker'
+                              $ref: "#/components/schemas/tracker"
                             shipment:
-                              $ref: '#/components/schemas/shipment'
+                              $ref: "#/components/schemas/shipment"
                             events:
                               type: array
                               items:
-                                $ref: '#/components/schemas/event'
+                                $ref: "#/components/schemas/event"
                             statistics:
-                              $ref: '#/components/schemas/statistics'
+                              $ref: "#/components/schemas/statistics"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       operationId: create-tracker-and-get-tracking-results
   /public/v1/trackers/{trackerId}:
     get:
       tags:
-      - "\U0001F4E6 Trackers"
+        - "\U0001F4E6 Trackers"
       summary: Get an existing tracker
-      description: This endpoint return an existing `Tracker` for a given `trackerId`.
+      description: This endpoint return an existing `Tracker` for a given identifier.
+      security:
+        - Authorization: []
       parameters:
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Your `api_key` prefixed with `Bearer`.
-        required: true
-      - name: trackerId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: '**Required** Id of the tracker, provided by Ship24 at creation.
-          `clientTrackerId` can also be used in this field by employing the `searchBy`
-          parameter.'
-      - name: searchBy
-        in: query
-        schema:
-          type: string
-          enum:
-          - trackerId
-          - clientTrackerId
-        description: Parameter allowing to search either by `trackerId`or `clientTrackerId`.
-          Default behavior is by `trackerId`.
+        - name: trackerId
+          in: path
+          schema:
+            type: string
+          required: true
+          description:
+            "**Required** Id of the tracker, provided by Ship24 at creation.
+            `clientTrackerId` can also be used in this field by employing the `searchBy`
+            parameter."
+        - name: searchBy
+          in: query
+          schema:
+            type: string
+            enum:
+              - trackerId
+              - clientTrackerId
+          description:
+            Parameter allowing to search either by `trackerId`or `clientTrackerId`.
+            Default behavior is by `trackerId`.
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/tracker'
+                $ref: "#/components/schemas/tracker"
           description: OK
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error-response-format'
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       operationId: get-tracker-by-trackerId
     patch:
       tags:
-      - "\U0001F4E6 Trackers"
+        - "\U0001F4E6 Trackers"
       summary: Update an existing tracker
-      description: "This endpoint allows to modify an existing `Tracker` matching\
-        \ with the given\_`trackerId`.  \n\n> Once the Tracker has gathered shipment\
+      description:
+        "This endpoint allows to modify an existing `Tracker` matching\
+        \ with the given identifier.  \n\n> Once the Tracker has gathered shipment\
         \ tracking information, certain fields related to the shipment data cannot\
         \ be modified. These include: \n> - `courierCode` \n> - `originCountryCode`\
         \ \n> - `destinationCountryCode` \n> - `destinationPostCode` \n> - `shippingDate`"
@@ -1028,7 +1093,8 @@ paths:
               properties:
                 isSubscribed:
                   type: boolean
-                  description: Setting at `false` will unsubscribe you from the `Tracker`.
+                  description:
+                    Setting at `false` will unsubscribe you from the `Tracker`.
                     Once unsubscribed, you will still be able to fetch the existing
                     tracking results but Ship24 won't search for new data or send
                     webhook notifications. `Trackers` are automatically disabled after
@@ -1038,9 +1104,10 @@ paths:
                     the `clientTrackerId` value in a new `Tracker`.
                 courierCode:
                   type:
-                  - array
-                  - string
-                  description: "Code of the courier(s) handling the shipment (Up to\
+                    - array
+                    - string
+                  description:
+                    "Code of the courier(s) handling the shipment (Up to\
                     \ 3 max) (see Couriers list section)  - \U0001F4CC Recommended\
                     \ to improve tracking accuracy"
                   minItems: 0
@@ -1053,93 +1120,94 @@ paths:
                   format: ISO 3166-1 alpha-2/alpha-3
                 destinationCountryCode:
                   type: string
-                  description: "Recipient country code - \U0001F4CC Recommended to\
+                  description:
+                    "Recipient country code - \U0001F4CC Recommended to\
                     \ improve tracking accuracy"
                   format: ISO 3166-1 alpha-2/alpha-3
                 destinationPostCode:
                   type: string
-                  description: "Recipient Post code (or ZIP code)  - \U0001F4CC Recommended\
+                  description:
+                    "Recipient Post code (or ZIP code)  - \U0001F4CC Recommended\
                     \ to improve tracking accuracy"
                 shippingDate:
                   type: string
                   format: date-time
-                  description: "Date at which the shipment has been shipped  - \U0001F4CC\
+                  description:
+                    "Date at which the shipment has been shipped  - \U0001F4CC\
                     \ Recommended to improve tracking accuracy: providing the shipping\
                     \ date helps us accurately identify the shipment and improves\
                     \ our ability to retrieve the correct data. However, an inaccurate\
                     \ shipping date could cause our system to exclude the right shipment.\
                     \ Therefore, please ensure the provided shipping date aligns closely\
                     \ with the actual shipment date, give or take a few days. [Format](http://docs.ship24.com/data-format#logistics-date-and-time)"
-        description: 'Only the following property can be updated on a Tracker:'
+        description: "Only the following property can be updated on a Tracker:"
+      security:
+        - Authorization: []
       parameters:
-      - name: Content-Type
-        in: header
-        schema:
-          type: string
-        description: application/json; charset=utf-8
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Your `api_key` prefixed with `Bearer`.
-        required: true
-      - name: trackerId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: '**Required** Id of the tracker, provided by Ship24 at creation.
-          `clientTrackerId` can also be used in this field by employing the `searchBy`
-          parameter.'
-      - name: searchBy
-        in: query
-        schema:
-          type: string
-          enum:
-          - trackerId
-          - clientTrackerId
-        description: Parameter allowing to search either by `trackerId`or `clientTrackerId`.
-          Default behavior is by `trackerId`.
+        - name: trackerId
+          in: path
+          schema:
+            type: string
+          required: true
+          description:
+            "**Required** Id of the tracker, provided by Ship24 at creation.
+            `clientTrackerId` can also be used in this field by employing the `searchBy`
+            parameter."
+        - name: searchBy
+          in: query
+          schema:
+            type: string
+            enum:
+              - trackerId
+              - clientTrackerId
+          description:
+            Parameter allowing to search either by `trackerId`or `clientTrackerId`.
+            Default behavior is by `trackerId`.
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/tracker'
-        '400':
+                $ref: "#/components/schemas/tracker"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error-response-format'
+                $ref: "#/components/schemas/error-response-format"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       operationId: update-tracker-by-trackerId
   /public/v1/trackers/search/{trackingNumber}/results:
     get:
       tags:
-      - "\U0001F4E6 Trackers"
+        - "\U0001F4E6 Trackers"
       summary: Get tracking results for existing trackers by tracking number
-      description: "This endpoint will return the `tracking` result corresponding\
+      description:
+        "This endpoint will return the `tracking` result corresponding\
         \ to the tracking number provided as a parameter. \n\nThe `tracking` object\
         \ is detailed in the [SCHEMAS](/schemas/tracking) section. \n\nUnlike the\
         \ `/v1/trackers/track` endpoint, a **`Tracker`** **must first be created on\
         \ this tracking number before using this endpoint.** As a tracking number\
         \ is not unique, the endpoint may return multiple `trackings` associated with\
         \ different `Trackers`."
+      security:
+        - Authorization: []
       parameters:
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Your `api_key` prefixed with `Bearer`.
-        required: true
-      - name: trackingNumber
-        in: path
-        schema:
-          type: string
-        required: true
-        description: '**Required** Tracking number of the parcel.'
+        - name: trackingNumber
+          in: path
+          schema:
+            type: string
+          required: true
+          description: "**Required** Tracking number of the parcel."
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -1155,54 +1223,60 @@ paths:
                           type: object
                           properties:
                             tracker:
-                              $ref: '#/components/schemas/tracker'
+                              $ref: "#/components/schemas/tracker"
                             shipment:
-                              $ref: '#/components/schemas/shipment'
+                              $ref: "#/components/schemas/shipment"
                             events:
                               type: array
                               items:
-                                $ref: '#/components/schemas/event'
+                                $ref: "#/components/schemas/event"
                             statistics:
-                              $ref: '#/components/schemas/statistics'
+                              $ref: "#/components/schemas/statistics"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       operationId: get-tracking-results-of-trackers-by-tracking-number
   /public/v1/trackers/{trackerId}/results:
     get:
       tags:
-      - "\U0001F4E6 Trackers"
+        - "\U0001F4E6 Trackers"
       summary: Get tracking results for an existing tracker
-      description: "This endpoint return the `Tracking` results of an existing `Tracker`\
+      description:
+        "This endpoint return the `Tracking` results of an existing `Tracker`\
         \ matching with the given trackerId. As trackerId are unique, the `Trackings`\
         \ array will always have only one item. \n\nThe `tracking` object is detailed\
         \ in the [SCHEMAS](/schemas/tracking) section.\n\nUnlike the `/v1/trackers/track`\
         \ endpoint, a **`Tracker`** **must first be created on this tracking number\
         \ before using this endpoint.** As a tracking number is not unique, the endpoint\
         \ may return multiple `trackings` associated with different `Trackers`."
+      security:
+        - Authorization: []
       parameters:
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Your `api_key` prefixed with `Bearer`.
-        required: true
-      - name: trackerId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: '**Required** Id of the tracker, provided by Ship24 at creation.
-          `clientTrackerId` can also be used in this field by employing the `searchBy`
-          parameter.'
-      - name: searchBy
-        in: query
-        schema:
-          type: string
-          enum:
-          - trackerId
-          - clientTrackerId
-        description: Parameter allowing to search either by `trackerId`or `clientTrackerId`.
-          Default behavior is by `trackerId`.
+        - name: trackerId
+          in: path
+          schema:
+            type: string
+          required: true
+          description:
+            "**Required** Id of the tracker, provided by Ship24 at creation.
+            `clientTrackerId` can also be used in this field by employing the `searchBy`
+            parameter."
+        - name: searchBy
+          in: query
+          schema:
+            type: string
+            enum:
+              - trackerId
+              - clientTrackerId
+          description:
+            Parameter allowing to search either by `trackerId`or `clientTrackerId`.
+            Default behavior is by `trackerId`.
       responses:
-        '200':
+        "200":
+          description: OK
           content:
             application/json:
               schema:
@@ -1217,39 +1291,36 @@ paths:
                           type: object
                           properties:
                             tracker:
-                              $ref: '#/components/schemas/tracker'
+                              $ref: "#/components/schemas/tracker"
                             shipment:
-                              $ref: '#/components/schemas/shipment'
+                              $ref: "#/components/schemas/shipment"
                             events:
                               type: array
                               items:
-                                $ref: '#/components/schemas/event'
+                                $ref: "#/components/schemas/event"
                             statistics:
-                              $ref: '#/components/schemas/statistics'
-          description: OK
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error-response-format'
+                              $ref: "#/components/schemas/statistics"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       operationId: get-tracking-results-of-tracker-by-trackerId
   /public/v1/couriers:
     get:
       tags:
-      - "\U0001F69A Couriers"
+        - "\U0001F69A Couriers"
       summary: Get all couriers
-      description: This endpoint will return the list of all couriers supported by
+      description:
+        This endpoint will return the list of all couriers supported by
         Ship24, identified by their `courierCode`.
-      parameters:
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Your `api_key` prefixed with `Bearer`.
-        required: true
+      security:
+        - Authorization: []
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -1266,51 +1337,63 @@ paths:
                           properties:
                             courierCode:
                               type: string
-                              description: The codified code of this courier in Ship24
+                              description:
+                                The codified code of this courier in Ship24
                                 system.
                             courierName:
                               type: string
                               description: The courier name.
                             website:
                               type:
-                              - string
-                              - 'null'
+                                - string
+                                - "null"
                               description: The courier public website.
                             isPost:
                               type: boolean
-                              description: '`true` in case the courier is a postal
-                                operator.'
+                              description:
+                                "`true` in case the courier is a postal
+                                operator."
                             countryCode:
                               type:
-                              - string
-                              - 'null'
+                                - string
+                                - "null"
                               format: ISO 3166-1 alpha-2
-                              description: The main country in which the courier is
+                              description:
+                                The main country in which the courier is
                                 operating.
                             requiredFields:
                               type:
-                              - array
-                              - 'null'
+                                - array
+                                - "null"
                               items:
                                 type: string
                                 enum:
-                                - destinationPostCode
-                                - destinationCountryCode
-                              description: Indicate which additional information is
+                                  - destinationPostCode
+                                  - destinationCountryCode
+                              description:
+                                Indicate which additional information is
                                 required by the courier to get optimal tracking results.
                                 See [Additional information](https://docs.ship24.com/couriers#required-fields)
                             isDeprecated:
                               type:
-                              - boolean
-                              description: '`true` in case the courier is deprecated.
-                                See [Deprecated couriers](https://docs.ship24.com/couriers#deprecated-couriers)'
+                                - boolean
+                              description:
+                                "`true` in case the courier is deprecated.
+                                See [Deprecated couriers](https://docs.ship24.com/couriers#deprecated-couriers)"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       operationId: get-couriers
   /public/v1/tracking/search:
     post:
       tags:
-      - "\u2795 API for per-call plans"
+        - "\u2795 API for per-call plans"
       summary: Get tracking results by tracking number
-      description: "This endpoint will return the `tracking` corresponding to the\
+      description:
+        "This endpoint will return the `tracking` corresponding to the\
         \ tracking number provided as a parameter. \n\nThe `tracking` object is detailed\
         \ in the [SCHEMAS](/schemas/tracking) section.\n\nFor better accuracy, we\
         \ strongly advise to provide extra information such as the origin country,\
@@ -1336,21 +1419,28 @@ paths:
                   description: Tracking number of the shipment.
                 originCountryCode:
                   type: string
-                  description: "Sender country code - \U0001F4CC Recommended to improve\
+                  description:
+                    "Sender country code - \U0001F4CC Recommended to improve\
                     \ tracking accuracy"
                   format: ISO 3166-1 alpha-2/alpha-3
                 destinationCountryCode:
                   type: string
-                  description: "Recipient country code - \U0001F4CC Recommended to\
+                  description:
+                    "Recipient country code - \U0001F4CC Recommended to\
                     \ improve tracking accuracy"
                   format: ISO 3166-1 alpha-2/alpha-3
                 destinationPostCode:
                   type: string
-                  description: "Recipient Post code (or ZIP code) - \U0001F4CC Recommended\
+                  description:
+                    "Recipient Post code (or ZIP code) - \U0001F4CC Recommended\
                     \ to improve tracking accuracy"
+                  minLength: 1
+                  maxLength: 32
+                  pattern: ^[a-zA-Z0-9- ._/]*$
                 shippingDate:
                   type: string
-                  description: "Date at which the shipment has been shipped  - \U0001F4CC\
+                  description:
+                    "Date at which the shipment has been shipped  - \U0001F4CC\
                     \ Recommended to improve tracking accuracy: providing the shipping\
                     \ date helps us accurately identify the shipment and improves\
                     \ our ability to retrieve the correct data. However, an inaccurate\
@@ -1360,24 +1450,16 @@ paths:
                   format: date-time
                 courierCode:
                   type:
-                  - array
-                  - string
-                  description: "Code of the courier(s) handling the shipment (Up to\
+                    - array
+                    - string
+                  description:
+                    "Code of the courier(s) handling the shipment (Up to\
                     \ 3 max) (see Couriers list section)  - \U0001F4CC Recommended\
                     \ to improve tracking accuracy"
-      parameters:
-      - name: Content-Type
-        in: header
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Your `api_key` prefixed with `Bearer`.
-        required: true
+      security:
+        - Authorization: []
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
@@ -1393,54 +1475,59 @@ paths:
                           type: object
                           properties:
                             shipment:
-                              $ref: '#/components/schemas/shipment'
+                              $ref: "#/components/schemas/shipment"
                             events:
                               type: array
                               items:
-                                $ref: '#/components/schemas/event'
+                                $ref: "#/components/schemas/event"
                             statistics:
-                              $ref: '#/components/schemas/statistics'
-        '400':
+                              $ref: "#/components/schemas/statistics"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error-response-format'
+                $ref: "#/components/schemas/error-response-format"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       operationId: get-tracking
   /public/v1/trackers/{trackerId}/webhook-events/resend:
     post:
       tags:
-      - "\U0001F4E6 Trackers"
+        - "\U0001F4E6 Trackers"
       summary: Resend webhooks of an existing tracker
-      description: "This endpoint allows to resend all webhook messages of an existing\
+      description:
+        "This endpoint allows to resend all webhook messages of an existing\
         \ tracker. \n\nThis can be useful in case you missed some webhook messages\
         \ or if you need to reprocess them for any reason."
+      security:
+        - Authorization: []
       parameters:
-      - name: Authorization
-        in: header
-        schema:
-          type: string
-        description: Your `api_key` prefixed with `Bearer`.
-        required: true
-      - name: trackerId
-        in: path
-        schema:
-          type: string
-        required: true
-        description: '**Required** Id of the tracker, provided by Ship24 at creation.
-          `clientTrackerId` can also be used in this field by employing the `searchBy`
-          parameter.'
-      - name: searchBy
-        in: query
-        schema:
-          type: string
-          enum:
-          - trackerId
-          - clientTrackerId
-        description: Parameter allowing to search either by `trackerId`or `clientTrackerId`.
-          Default behavior is by `trackerId`.
+        - name: trackerId
+          in: path
+          schema:
+            type: string
+          required: true
+          description:
+            "**Required** Id of the tracker, provided by Ship24 at creation.
+            `clientTrackerId` can also be used in this field by employing the `searchBy`
+            parameter."
+        - name: searchBy
+          in: query
+          schema:
+            type: string
+            enum:
+              - trackerId
+              - clientTrackerId
+          description:
+            Parameter allowing to search either by `trackerId`or `clientTrackerId`.
+            Default behavior is by `trackerId`.
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
@@ -1456,4 +1543,12 @@ paths:
                           totalResent:
                             type: string
                             description: The total number of events resent.
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
       operationId: resend-webhooks
