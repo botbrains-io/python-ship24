@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: f1b740a9-dcfc-422b-ab52-f143d8b00f15
 management:
-  docChecksum: 05e0837999cf0a549729ef3bddac147a
+  docChecksum: a4fce56956cc7a1254984a83f3608881
   docVersion: 1.0.0
   speakeasyVersion: 1.575.1
   generationVersion: 2.648.1
-  releaseVersion: 0.1.0
-  configChecksum: b566893147c6d3e957bcfe8b9cbca7f9
+  releaseVersion: 0.1.2
+  configChecksum: ed6d5c2164497db622f14e94852ad1e6
 features:
   python:
     acceptHeaders: 3.0.0
@@ -45,10 +45,9 @@ generatedFiles:
   - docs/models/bulkcreatetrackersresponseerror.md
   - docs/models/bulkcreatetrackersresponseresponse.md
   - docs/models/courier.md
-  - docs/models/createtrackerandgettrackingresultsdata.md
   - docs/models/createtrackerandgettrackingresultsresponse.md
-  - docs/models/createtrackerandgettrackingresultsresponsebody.md
-  - docs/models/createtrackerandgettrackingresultstracking.md
+  - docs/models/createtrackerandgettrackingresultsresponsedata.md
+  - docs/models/createtrackerandgettrackingresultsresponseresponse.md
   - docs/models/createtrackerdata.md
   - docs/models/createtrackerresponse.md
   - docs/models/createtrackerresponsebody.md
@@ -108,6 +107,7 @@ generatedFiles:
   - docs/models/trackercreaterequest.md
   - docs/models/trackercreaterequestcouriercode.md
   - docs/models/trackercreaterequestrecipient.md
+  - docs/models/tracking.md
   - docs/models/trackingnumber.md
   - docs/models/updatetrackerbytrackeridcouriercode.md
   - docs/models/updatetrackerbytrackeridrequest.md
@@ -144,6 +144,7 @@ generatedFiles:
   - src/ship_24/models/bulk_create_trackers_request.py
   - src/ship_24/models/bulk_create_trackers_response.py
   - src/ship_24/models/bulk_create_trackersop.py
+  - src/ship_24/models/create_tracker_and_get_tracking_results_response.py
   - src/ship_24/models/create_tracker_and_get_tracking_resultsop.py
   - src/ship_24/models/create_trackerop.py
   - src/ship_24/models/error_response_format.py
@@ -217,8 +218,12 @@ examples:
     speakeasy-default-create-tracker-and-get-tracking-results:
       responses:
         "200":
-          application/json: {}
+          application/json: {"data": {}}
         "401":
+          application/json: {}
+        "201":
+          application/json: {}
+        "400":
           application/json: {}
   get-tracker-by-trackerId:
     speakeasy-default-get-tracker-by-tracker-id:

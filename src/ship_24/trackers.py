@@ -703,7 +703,7 @@ class Trackers(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.CreateTrackerAndGetTrackingResultsResponse:
+    ) -> models.CreateTrackerAndGetTrackingResultsResponseResponse:
         r"""Create a tracker and get tracking results
 
         This endpoint creates a new `Tracker` on the specified tracking number , if it does not exist, and returns the tracking results directly. We advise using this endpoint if you are not interested in receiving webhook notifications and just want to fetch tracking results. This way, you can always call this unified endpoint to get tracking results, without worrying about `Tracker` creation and management.
@@ -771,19 +771,19 @@ class Trackers(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["401", "403", "429", "4XX", "5XX"],
+            error_status_codes=["400", "401", "403", "429", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return models.CreateTrackerAndGetTrackingResultsResponse(
+        if utils.match_response(http_res, ["200", "201"], "application/json"):
+            return models.CreateTrackerAndGetTrackingResultsResponseResponse(
                 result=utils.unmarshal_json_response(
-                    models.CreateTrackerAndGetTrackingResultsResponseBody, http_res
+                    models.CreateTrackerAndGetTrackingResultsResponse, http_res
                 ),
                 headers={},
             )
-        if utils.match_response(http_res, ["401", "403"], "application/json"):
+        if utils.match_response(http_res, ["400", "401", "403"], "application/json"):
             response_data = utils.unmarshal_json_response(
                 errors.ErrorResponseFormatData, http_res
             )
@@ -810,7 +810,7 @@ class Trackers(BaseSDK):
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.CreateTrackerAndGetTrackingResultsResponse:
+    ) -> models.CreateTrackerAndGetTrackingResultsResponseResponse:
         r"""Create a tracker and get tracking results
 
         This endpoint creates a new `Tracker` on the specified tracking number , if it does not exist, and returns the tracking results directly. We advise using this endpoint if you are not interested in receiving webhook notifications and just want to fetch tracking results. This way, you can always call this unified endpoint to get tracking results, without worrying about `Tracker` creation and management.
@@ -878,19 +878,19 @@ class Trackers(BaseSDK):
                 ),
             ),
             request=req,
-            error_status_codes=["401", "403", "429", "4XX", "5XX"],
+            error_status_codes=["400", "401", "403", "429", "4XX", "5XX"],
             retry_config=retry_config,
         )
 
         response_data: Any = None
-        if utils.match_response(http_res, "200", "application/json"):
-            return models.CreateTrackerAndGetTrackingResultsResponse(
+        if utils.match_response(http_res, ["200", "201"], "application/json"):
+            return models.CreateTrackerAndGetTrackingResultsResponseResponse(
                 result=utils.unmarshal_json_response(
-                    models.CreateTrackerAndGetTrackingResultsResponseBody, http_res
+                    models.CreateTrackerAndGetTrackingResultsResponse, http_res
                 ),
                 headers={},
             )
-        if utils.match_response(http_res, ["401", "403"], "application/json"):
+        if utils.match_response(http_res, ["400", "401", "403"], "application/json"):
             response_data = utils.unmarshal_json_response(
                 errors.ErrorResponseFormatData, http_res
             )

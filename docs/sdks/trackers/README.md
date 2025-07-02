@@ -185,13 +185,13 @@ with Ship24(
 
 ### Response
 
-**[models.CreateTrackerAndGetTrackingResultsResponse](../../models/createtrackerandgettrackingresultsresponse.md)**
+**[models.CreateTrackerAndGetTrackingResultsResponseResponse](../../models/createtrackerandgettrackingresultsresponseresponse.md)**
 
 ### Errors
 
 | Error Type                 | Status Code                | Content Type               |
 | -------------------------- | -------------------------- | -------------------------- |
-| errors.ErrorResponseFormat | 401, 403                   | application/json           |
+| errors.ErrorResponseFormat | 400, 401, 403              | application/json           |
 | errors.APIError            | 4XX, 5XX                   | \*/\*                      |
 
 ## get_tracker_by_tracker_id

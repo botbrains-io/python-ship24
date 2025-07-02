@@ -2,8 +2,8 @@ speakeasyVersion: 1.575.1
 sources:
     Ship24 Tracking API:
         sourceNamespace: ship-24-tracking-api
-        sourceRevisionDigest: sha256:e8da686913275262d315ca1b243d566968f3f94fcc73a15991e96126fe770cb9
-        sourceBlobDigest: sha256:f6dd0ae1093be91d8e191f0469627b691409eb70474fc0be99afd88eb72f585e
+        sourceRevisionDigest: sha256:4023e9e93cf0eb00cade75a889cd7c96eeda6a59662ed2400311b503dbbe0cd8
+        sourceBlobDigest: sha256:2d2a4bb3f6d72964f75826a61261fea85ff3fd90106fd2022a7cb583170ee3c1
         tags:
             - latest
             - 1.0.0
@@ -11,10 +11,10 @@ targets:
     ship-24:
         source: Ship24 Tracking API
         sourceNamespace: ship-24-tracking-api
-        sourceRevisionDigest: sha256:e8da686913275262d315ca1b243d566968f3f94fcc73a15991e96126fe770cb9
-        sourceBlobDigest: sha256:f6dd0ae1093be91d8e191f0469627b691409eb70474fc0be99afd88eb72f585e
+        sourceRevisionDigest: sha256:4023e9e93cf0eb00cade75a889cd7c96eeda6a59662ed2400311b503dbbe0cd8
+        sourceBlobDigest: sha256:2d2a4bb3f6d72964f75826a61261fea85ff3fd90106fd2022a7cb583170ee3c1
         codeSamplesNamespace: ship-24-tracking-api-python-code-samples
-        codeSamplesRevisionDigest: sha256:5bbeeb5e24fdec34ebbb6406d903781a865d148bf2837c3f8eb141c34852a1a6
+        codeSamplesRevisionDigest: sha256:314e2b21a92c2c3b0d90029d88260d1d4c18d5b5d91dce0ff23f2f0db741f3cd
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
