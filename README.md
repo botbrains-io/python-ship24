@@ -1,6 +1,6 @@
 # ship-24
 
-Developer-friendly & type-safe Python SDK specifically catered to leverage *ship-24* API.
+Developer-friendly & type-safe Python SDK specifically catered to leverage _ship-24_ API.
 
 <div align="left">
     <a href="https://www.speakeasy.com/?utm_source=ship-24&utm_campaign=python"><img src="https://custom-icon-badges.demolab.com/badge/-Built%20By%20Speakeasy-212015?style=for-the-badge&logoColor=FBE331&logo=speakeasy&labelColor=545454" /></a>
@@ -9,17 +9,17 @@ Developer-friendly & type-safe Python SDK specifically catered to leverage *ship
     </a>
 </div>
 
-
 <br /><br />
-> [!IMPORTANT]
-> This SDK is not yet ready for production use. To complete setup please follow the steps outlined in your [workspace](https://app.speakeasy.com/org/botbrains/zendesksdk). Delete this section before > publishing to a package manager.
+Generated from a modified [ship24 openapi spec](https://docs.ship24.com/assets/openapi/ship24-tracking-api.yaml)
 
 <!-- Start Summary [summary] -->
+
 ## Summary
 
 Ship24 Tracking API: ## Getting started
 
 Make sure to read the [Getting started](https://docs.ship24.com/getting-started) section of our [API Documentation](https://docs.ship24.com/) before using the endpoints presented below.
+
 ## Documentation structure
 
 Use the top navigation bar to switch from:
@@ -34,52 +34,55 @@ Our API Reference is available as an Open API 3.1 format file, which is supporte
 
 - Latest version: https://docs.ship24.com/assets/openapi/ship24-tracking-api.yaml
 
-| <!-- -->                                                     | <!-- -->                                                                                                                                                     |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| <!-- -->                                                     | <!-- -->                                                                                                                                                            |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ![Postman](/img/postman-logo.svg) Postman                    | In Postman, click on "Import", go on the "Link" tab, and paste this URL `https://docs.ship24.com/assets/openapi/ship24-tracking-api.yaml`                           |
 | <img src="/img/insomnia-logo.png" width="32"></img> Insomnia | From Insomnia preferences, locate the "Import data" option, choose "From URL", and paste this URL `https://docs.ship24.com/assets/openapi/ship24-tracking-api.yaml` |
+
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
+
 ## Table of Contents
+
 <!-- $toc-max-depth=2 -->
-* [ship-24](#ship-24)
-  * [Documentation structure](#documentation-structure)
-  * [Import our documentation into your HTTP client](#import-our-documentation-into-your-http-client)
-  * [SDK Installation](#sdk-installation)
-  * [IDE Support](#ide-support)
-  * [SDK Example Usage](#sdk-example-usage)
-  * [Authentication](#authentication)
-  * [Available Resources and Operations](#available-resources-and-operations)
-  * [Retries](#retries)
-  * [Error Handling](#error-handling)
-  * [Server Selection](#server-selection)
-  * [Custom HTTP Client](#custom-http-client)
-  * [Resource Management](#resource-management)
-  * [Debugging](#debugging)
-* [Development](#development)
-  * [Maturity](#maturity)
-  * [Contributions](#contributions)
+
+- [ship-24](#ship-24)
+  - [Documentation structure](#documentation-structure)
+  - [Import our documentation into your HTTP client](#import-our-documentation-into-your-http-client)
+  - [SDK Installation](#sdk-installation)
+  - [IDE Support](#ide-support)
+  - [SDK Example Usage](#sdk-example-usage)
+  - [Authentication](#authentication)
+  - [Available Resources and Operations](#available-resources-and-operations)
+  - [Retries](#retries)
+  - [Error Handling](#error-handling)
+  - [Server Selection](#server-selection)
+  - [Custom HTTP Client](#custom-http-client)
+  - [Resource Management](#resource-management)
+  - [Debugging](#debugging)
+- [Development](#development)
+  - [Maturity](#maturity)
+  - [Contributions](#contributions)
 
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
+
 ## SDK Installation
 
 > [!TIP]
 > To finish publishing your SDK to PyPI you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
 
-
-> [!NOTE]
-> **Python version upgrade policy**
+> [!NOTE] > **Python version upgrade policy**
 >
 > Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
 
-The SDK can be installed with either *pip* or *poetry* package managers.
+The SDK can be installed with either _pip_ or _poetry_ package managers.
 
 ### PIP
 
-*PIP* is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
+_PIP_ is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
 
 ```bash
 pip install git+<UNSET>.git
@@ -87,7 +90,7 @@ pip install git+<UNSET>.git
 
 ### Poetry
 
-*Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
+_Poetry_ is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
 
 ```bash
 poetry add git+<UNSET>.git
@@ -123,9 +126,11 @@ sdk = Ship24(
 
 Once that is saved to a file, you can run it with `uv run script.py` where
 `script.py` can be replaced with the actual file name.
+
 <!-- End SDK Installation [installation] -->
 
 <!-- Start IDE Support [idesupport] -->
+
 ## IDE Support
 
 ### PyCharm
@@ -136,6 +141,7 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 <!-- End IDE Support [idesupport] -->
 
 <!-- Start SDK Example Usage [usage] -->
+
 ## SDK Example Usage
 
 ### Example
@@ -159,6 +165,7 @@ with Ship24(
 </br>
 
 The same SDK client can also be used to make asychronous requests by importing asyncio.
+
 ```python
 # Asynchronous Example
 import asyncio
@@ -178,9 +185,11 @@ async def main():
 
 asyncio.run(main())
 ```
+
 <!-- End SDK Example Usage [usage] -->
 
 <!-- Start Authentication [security] -->
+
 ## Authentication
 
 ### Per-Client Security Schemes
@@ -192,6 +201,7 @@ This SDK supports the following security scheme globally:
 | `authorization` | apiKey | API key | `SHIP24_AUTHORIZATION` |
 
 To authenticate with the API the `authorization` parameter must be set when initializing the SDK client instance. For example:
+
 ```python
 import os
 from ship24 import Ship24
@@ -207,9 +217,11 @@ with Ship24(
     print(res)
 
 ```
+
 <!-- End Authentication [security] -->
 
 <!-- Start Available Resources and Operations [operations] -->
+
 ## Available Resources and Operations
 
 <details open>
@@ -217,34 +229,35 @@ with Ship24(
 
 ### [api_for_per_call_plans](docs/sdks/apiforpercallplans/README.md)
 
-* [get_tracking](docs/sdks/apiforpercallplans/README.md#get_tracking) - Get tracking results by tracking number
+- [get_tracking](docs/sdks/apiforpercallplans/README.md#get_tracking) - Get tracking results by tracking number
 
 ### [couriers](docs/sdks/couriers/README.md)
 
-* [get_couriers](docs/sdks/couriers/README.md#get_couriers) - Get all couriers
-
+- [get_couriers](docs/sdks/couriers/README.md#get_couriers) - Get all couriers
 
 ### [trackers](docs/sdks/trackers/README.md)
 
-* [create_tracker](docs/sdks/trackers/README.md#create_tracker) - Create a tracker
-* [list_trackers](docs/sdks/trackers/README.md#list_trackers) - List existing Trackers
-* [bulk_create_trackers](docs/sdks/trackers/README.md#bulk_create_trackers) - Bulk create trackers
-* [create_tracker_and_get_tracking_results](docs/sdks/trackers/README.md#create_tracker_and_get_tracking_results) - Create a tracker and get tracking results
-* [get_tracker_by_tracker_id](docs/sdks/trackers/README.md#get_tracker_by_tracker_id) - Get an existing tracker
-* [update_tracker_by_tracker_id](docs/sdks/trackers/README.md#update_tracker_by_tracker_id) - Update an existing tracker
-* [get_tracking_results_of_trackers_by_tracking_number](docs/sdks/trackers/README.md#get_tracking_results_of_trackers_by_tracking_number) - Get tracking results for existing trackers by tracking number
-* [get_tracking_results_of_tracker_by_tracker_id](docs/sdks/trackers/README.md#get_tracking_results_of_tracker_by_tracker_id) - Get tracking results for an existing tracker
-* [resend_webhooks](docs/sdks/trackers/README.md#resend_webhooks) - Resend webhooks of an existing tracker
+- [create_tracker](docs/sdks/trackers/README.md#create_tracker) - Create a tracker
+- [list_trackers](docs/sdks/trackers/README.md#list_trackers) - List existing Trackers
+- [bulk_create_trackers](docs/sdks/trackers/README.md#bulk_create_trackers) - Bulk create trackers
+- [create_tracker_and_get_tracking_results](docs/sdks/trackers/README.md#create_tracker_and_get_tracking_results) - Create a tracker and get tracking results
+- [get_tracker_by_tracker_id](docs/sdks/trackers/README.md#get_tracker_by_tracker_id) - Get an existing tracker
+- [update_tracker_by_tracker_id](docs/sdks/trackers/README.md#update_tracker_by_tracker_id) - Update an existing tracker
+- [get_tracking_results_of_trackers_by_tracking_number](docs/sdks/trackers/README.md#get_tracking_results_of_trackers_by_tracking_number) - Get tracking results for existing trackers by tracking number
+- [get_tracking_results_of_tracker_by_tracker_id](docs/sdks/trackers/README.md#get_tracking_results_of_tracker_by_tracker_id) - Get tracking results for an existing tracker
+- [resend_webhooks](docs/sdks/trackers/README.md#resend_webhooks) - Resend webhooks of an existing tracker
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Retries [retries] -->
+
 ## Retries
 
 Some of the endpoints in this SDK support retries. If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API. However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
 
 To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call:
+
 ```python
 import os
 from ship24 import Ship24
@@ -264,6 +277,7 @@ with Ship24(
 ```
 
 If you'd like to override the default retry strategy for all operations that support retries, you can use the `retry_config` optional parameter when initializing the SDK:
+
 ```python
 import os
 from ship24 import Ship24
@@ -281,9 +295,11 @@ with Ship24(
     print(res)
 
 ```
+
 <!-- End Retries [retries] -->
 
 <!-- Start Error Handling [errors] -->
+
 ## Error Handling
 
 [`Ship24Error`](./src/ship24/errors/ship24error.py) is the base class for all HTTP error responses. It has the following properties:
@@ -298,6 +314,7 @@ with Ship24(
 | `err.data`         |                  | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
 
 ### Example
+
 ```python
 import os
 from ship24 import Ship24, errors
@@ -330,35 +347,41 @@ with Ship24(
 ```
 
 ### Error Classes
+
 **Primary errors:**
-* [`Ship24Error`](./src/ship24/errors/ship24error.py): The base class for HTTP error responses.
-  * [`ErrorResponseFormat`](./src/ship24/errors/errorresponseformat.py): Generic error.
+
+- [`Ship24Error`](./src/ship24/errors/ship24error.py): The base class for HTTP error responses.
+  - [`ErrorResponseFormat`](./src/ship24/errors/errorresponseformat.py): Generic error.
 
 <details><summary>Less common errors (6)</summary>
 
 <br />
 
 **Network errors:**
-* [`httpx.RequestError`](https://www.python-httpx.org/exceptions/#httpx.RequestError): Base class for request errors.
-    * [`httpx.ConnectError`](https://www.python-httpx.org/exceptions/#httpx.ConnectError): HTTP client was unable to make a request to a server.
-    * [`httpx.TimeoutException`](https://www.python-httpx.org/exceptions/#httpx.TimeoutException): HTTP request timed out.
 
+- [`httpx.RequestError`](https://www.python-httpx.org/exceptions/#httpx.RequestError): Base class for request errors.
+  - [`httpx.ConnectError`](https://www.python-httpx.org/exceptions/#httpx.ConnectError): HTTP client was unable to make a request to a server.
+  - [`httpx.TimeoutException`](https://www.python-httpx.org/exceptions/#httpx.TimeoutException): HTTP request timed out.
 
 **Inherit from [`Ship24Error`](./src/ship24/errors/ship24error.py)**:
-* [`BulkCreateTrackersResponseError`](./src/ship24/errors/bulkcreatetrackersresponseerror.py): Created. Applicable to 1 of 11 methods.*
-* [`ResponseValidationError`](./src/ship24/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
+
+- [`BulkCreateTrackersResponseError`](./src/ship24/errors/bulkcreatetrackersresponseerror.py): Created. Applicable to 1 of 11 methods.\*
+- [`ResponseValidationError`](./src/ship24/errors/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
 
 </details>
 
 \* Check [the method documentation](#available-resources-and-operations) to see if the error is applicable.
+
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
+
 ## Server Selection
 
 ### Override Server URL Per-Client
 
 The default server can be overridden globally by passing a URL to the `server_url: str` optional parameter when initializing the SDK client instance. For example:
+
 ```python
 import os
 from ship24 import Ship24
@@ -375,16 +398,19 @@ with Ship24(
     print(res)
 
 ```
+
 <!-- End Server Selection [server] -->
 
 <!-- Start Custom HTTP Client [http-client] -->
+
 ## Custom HTTP Client
 
-The Python SDK makes API calls using the [httpx](https://www.python-httpx.org/) HTTP library.  In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
+The Python SDK makes API calls using the [httpx](https://www.python-httpx.org/) HTTP library. In order to provide a convenient way to configure timeouts, cookies, proxies, custom headers, and other low-level configuration, you can initialize the SDK client with your own HTTP client instance.
 Depending on whether you are using the sync or async version of the SDK, you can pass an instance of `HttpClient` or `AsyncHttpClient` respectively, which are Protocol's ensuring that the client has the necessary methods to make API calls.
 This allows you to wrap the client with your own custom logic, such as adding custom headers, logging, or error handling, or you can just pass an instance of `httpx.Client` or `httpx.AsyncClient` directly.
 
 For example, you could specify a header for every request that this sdk makes as follows:
+
 ```python
 from ship24 import Ship24
 import httpx
@@ -394,6 +420,7 @@ s = Ship24(client=http_client)
 ```
 
 or you could wrap the client with your own custom logic:
+
 ```python
 from ship24 import Ship24
 from ship24.httpclient import AsyncHttpClient
@@ -456,9 +483,11 @@ class CustomClient(AsyncHttpClient):
 
 s = Ship24(async_client=CustomClient(httpx.AsyncClient()))
 ```
+
 <!-- End Custom HTTP Client [http-client] -->
 
 <!-- Start Resource Management [resource-management] -->
+
 ## Resource Management
 
 The `Ship24` class implements the context manager protocol and registers a finalizer function to close the underlying sync and async HTTPX clients it uses under the hood. This will close HTTP connections, release memory and free up other resources held by the SDK. In short-lived Python programs and notebooks that make a few SDK method calls, resource management may not be a concern. However, in longer-lived programs, it is beneficial to create a single SDK instance via a [context manager][context-manager] and reuse it across the application.
@@ -484,14 +513,17 @@ async def amain():
     ) as s_client:
         # Rest of application here...
 ```
+
 <!-- End Resource Management [resource-management] -->
 
 <!-- Start Debugging [debug] -->
+
 ## Debugging
 
 You can setup your SDK to emit debug logs for SDK requests and responses.
 
 You can pass your own logger class directly into your SDK.
+
 ```python
 from ship24 import Ship24
 import logging
@@ -501,6 +533,7 @@ s = Ship24(debug_logger=logging.getLogger("ship24"))
 ```
 
 You can also enable a default debug logger by setting an environment variable `SHIP24_DEBUG` to true.
+
 <!-- End Debugging [debug] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
@@ -515,7 +548,7 @@ looking for the latest version.
 
 ## Contributions
 
-While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
-We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
+While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation.
+We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release.
 
 ### SDK Created by [Speakeasy](https://www.speakeasy.com/?utm_source=ship-24&utm_campaign=python)
