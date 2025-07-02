@@ -1514,7 +1514,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  "":
+                  xmlContent:
                     type: string
             multipart/form-data:
               schema:
@@ -1823,7 +1823,7 @@ paths:
                 destinationPostCode:
                   type: string
                   example: "94901"
-                  description: "Recipient Post code (or ZIP code)  - \U0001F4CC Recommended to improve tracking accuracy"  
+                  description: "Recipient Post code (or ZIP code)  - \U0001F4CC Recommended to improve tracking accuracy"
                 shippingDate:
                   type: string
                   format: date-time
