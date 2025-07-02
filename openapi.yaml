@@ -462,7 +462,7 @@ components:
         datetime:
           deprecated: true
           type: string
-          format: date-time
+          # format: date-time
         utcOffset:
           deprecated: true
           type: string
@@ -705,6 +705,31 @@ components:
             - message
       required:
         - status
+    create-tracker-and-get-tracking-results-response:
+      title: Create tracker and get tracking results response
+      type: object
+      x-internal: true
+      properties:
+        data:
+          type: object
+          properties:
+            trackings:
+              type: array
+              items:
+                type: object
+                properties:
+                  tracker:
+                    $ref: "#/components/schemas/tracker"
+                  shipment:
+                    $ref: "#/components/schemas/shipment"
+                  events:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/event"
+                  statistics:
+                    $ref: "#/components/schemas/statistics"
+      required:
+        - data
 tags:
   - name: "\U0001F4E6 Trackers"
   - name: "\u2693 Webhooks"
@@ -1000,30 +1025,23 @@ paths:
         - Authorization: []
       responses:
         "200":
-          description: OK
+          description: OK - Tracker already exists, returning tracking results
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      trackings:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            tracker:
-                              $ref: "#/components/schemas/tracker"
-                            shipment:
-                              $ref: "#/components/schemas/shipment"
-                            events:
-                              type: array
-                              items:
-                                $ref: "#/components/schemas/event"
-                            statistics:
-                              $ref: "#/components/schemas/statistics"
+                $ref: "#/components/schemas/create-tracker-and-get-tracking-results-response"
+        "201":
+          description: Created - New tracker created and tracking results returned
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/create-tracker-and-get-tracking-results-response"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error-response-format"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "403":
